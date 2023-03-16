@@ -56,10 +56,13 @@ namespace Status_200WebAPI.Controllers
         {
             var fileName = "report" + DateTime.Now + ".xlsx";
             fileName = fileName.Replace(":", "_");
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var filePath = Path.Combine(path, fileName);
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             // Создаем новый Excel-файл
-            using var package = new ExcelPackage(new FileInfo(filePath));
+            //using var package = new ExcelPackage(new FileInfo(filePath));
+            using var package = new ExcelPackage();
 
             // Добавляем лист в книгу
             var worksheet = package.Workbook.Worksheets.Add("Sheet1");
@@ -138,10 +141,11 @@ namespace Status_200WebAPI.Controllers
             }
 
             // Сохраняем изменения в Excel-файле
-            await package.SaveAsync();
+            //await package.SaveAsync();
 
             // Отдаем файл на скачивание
-            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            //var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            byte[] fileBytes = package.GetAsByteArray();
             return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
