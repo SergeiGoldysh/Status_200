@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "ConnectionString": "Data Source=.;Initial Catalog=Status200BD;Integrated Security=True;TrustServerCertificate=True;"
+  }
+}
